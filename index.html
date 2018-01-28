@@ -12,8 +12,8 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js"></script>
@@ -23,7 +23,7 @@
           margin: 0;
           padding: 0;
           background: #f5f5f5;
-          font-family: "Noto Sans", sans-serif; /* change made here */
+          font-family: "Montserrat", sans-serif; /* change body font here */
           color: #3d3d3d;
           font-size: 100%;
         }
@@ -34,13 +34,13 @@
 
         h1 {
             font-size: 2em;
-            font-family: Catamaran;   /* changed made here */
+            font-family: "Catamaran", monospace;   /* changed heading font */
             letter-spacing: .04em;
         }
 
         h2 {
             font-size: 1.5em;
-            font-family: Catamaran;   /* changed heading font */
+            font-family: "Catamaran", monospace;   /* changed heading font */
             letter-spacing: .04em;
         }
         p {
@@ -49,7 +49,7 @@
         }
 
         a {
-            color: #00a1ff;						/* to current favorite color (cyan/seafoam) */
+            color: #00a1ff;						/* link color to current favorite color (cyan/seafoam) */
             font-weight: bold;
             text-decoration: none;
         }
@@ -73,75 +73,12 @@
         }
 
     </style>
-	<meta charset=utf-8 />
-	<title>LexVegas!</title>
-	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
-
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			background: #f5f5f5;
-			font-family: "Noto Sans", sans-serif;
-			color: #3d3d3d;
-		}
-
-		section {
-			width: 960px;
-			margin: 20px auto;
-		}
-
-		h1 {
-			width: 960px;
-			margin: 20px auto;
-			font-family: Lora, serif;
-			letter-spacing: .04em;
-		}
-
-		h2 {
-			font-family: Lora, serif;
-			letter-spacing: .04em;
-		}
-
-		p {
-			font-size: 1em;
-			line-height: 1.5em;
-		}
-
-		a {
-			color: #005daa;
-			font-weight: bold;
-			text-decoration: none;
-		}
-
-		a:hover {
-			text-decoration: underline;
-		}
-
-		ul {
-			padding-left: 20px;
-		}
-
-		li {
-			margin: 10px 0
-		}
-		#map {
-			width: 960px;
-			height: 540px;
-			margin: 10px auto;
-			border: 2px solid #d3d3d3;
-		}
-	</style>
 </head>
 
 <body>
 	<section>
-	<h1>Dead Malls and Suburban Sprawl</h1>
+	<h1>Our Hyperurbanizing Megaregion</h1>
 	</section>
 
 	<section>
@@ -150,16 +87,13 @@
 
 	<section>
 		<h2>about this map</h2>
-		<p>Before the 1960's, it was all orange groves, nurseries for ferns, and wetlands.  Now it's concrete, asphalt, and retention ponds.  Guiness Record:  The most parallel bar dips in one minute with a 100 lb pack is 31, and was achieved by Denys Havrikov (Ukraine), in <a href="http://www.guinnessworldrecords.com/world-records/104417-most-parallel-bar-dips-in-one-minute-with-a-100-lb-pack">Orlando, Florida, USA, on 25 June 2017</a>.</p>
+		<p>Before the 1960's, it was all orange groves, nurseries for ferns, and wetlands.  Now when I go home, it seems like it's all concrete, asphalt, and retention ponds.  The entire lot of the house I grew up in eventually became a retention pond to facilitate the expansion of a highway.  When it was still a backyard, my sister buried her dead hamster "Salmon" there.
+      <br><br>Area Guiness Record:  The most parallel bar dips in one minute with a 100 lb pack is 31, and was achieved by Denys Havrikov (Ukraine), in <a href="http://www.guinnessworldrecords.com/world-records/104417-most-parallel-bar-dips-in-one-minute-with-a-100-lb-pack">Orlando, Florida, USA, on 25 June 2017</a>.</p>
 
 		<ul>
 			<li>See my projects on GitHub: <a href="https://github.com/JoshuaKnightKY">JoshuaKnightKY</a></li>
 			<!-- <li>Visit my <a href='#'>mapping portfolio</a>.</li> -->
-		<h2>about</h2>
 
-		<ul>
-			<li>See my projects on GitHub: <a href="https://github.com/JoshuaKnightKY">JoshuaKnightUK</a></li>
-		</ul>
 	</section>
 
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -168,8 +102,8 @@
 
 		// map options
 		var options = {
-			center: [28.675049, -81.317720], // changed to Casselberry, FL near where I used to play little kid soccer
-			zoom: 12
+			center: [28.647274, -81.317506], // updated to location of former house (now a retention pond)
+			zoom: 14
 		}
 
 		// create a Leaflet map in our division container with id of 'map'
@@ -177,14 +111,12 @@
 
 		// request some basemap tiles and add to the map
 
-		var tiles = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/light_all/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-			subdomains: 'abcd',
-			maxZoom: 19
+		var tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+			attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 		}).addTo(map);
 
 		// write a custom message for the Leaflet tooltip
-		var message = 'Dystopian Hellscapes Abound!';
+		var message = 'R.I.P. Salmon X_X';
 
 		// add a marker to the center of the map and open the tooltip
 		L.marker(map.getCenter())
