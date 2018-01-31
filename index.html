@@ -127,17 +127,17 @@
     <script>
         // map options
         var options = {
-            center: [28.649218, -81.316317], // updated to location of former house (now a retention pond)
-            zoom: 17
+            center: [28.649218, -81.316317], // map recentered to undeveloped wood lot between locations
+            zoom: 16
         }
 
         // create variables for data and values
         var location1Name = "Pet Cemetary"
             location1Coords = [28.647274, -81.317506],
-            location1Details = "My sister's dead hamster Salmon was buried here before this became a retention pond.";
+            location1Details = "My sister's dead hamster Salmon was buried here.";
         var location2Name = "Little League Park";
             location2Coords = [28.650825, -81.314764],
-            location2Details = "I played shortstop in 8th grade.";
+            location2Details = "I played shortstop in 8th grade little league.";
         var location3Name = "Hector Gonzalez's Old House",
             location3Coords = [28.651020, -81.317126],
             location3Details = "My best friend in middle school lived here.";
@@ -148,25 +148,22 @@
             details = [location1Details, location2Details, location3Details];
 
         // Location marker code example
-        var location1Tooltip = "<b>" + location1Name + "</b><br>" +
+        var location1Tooltip = "<b><img src='https://i.imgur.com/fjJEFDc.png'><br>" + location1Name + "</b><br>" +
             "<b>Details</b>: " + location1Details;
-        var location2Tooltip = "<b>" + location2Name + "</b><br>" +
+        var location2Tooltip = "<b><img src='https://i.imgur.com/JPn54Bi.png'><br>" + location2Name + "</b><br>" +
             "<b>Details</b>: " + location2Details;
-        var location3Tooltip = "<b>" + location3Name + "</b><br>" +
+        var location3Tooltip = "<b><img src='https://i.imgur.com/vjAUuH1.png'><br>" + location3Name + "</b><br>" +
             "<b>Details</b>: " + location3Details;
 
         // create a Leaflet map in our division container with id of 'map'
         var map = L.map('map', options);
 
         // request some basemap tiles and add to the map
-
         var tiles = L.tileLayer(
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
             }).addTo(map);
 
-        // write a custom message for the Leaflet tooltip
-        var message = 'R.I.P. Salmon X_X';
 
         // add markers
         L.marker(coords[0]).addTo(map)
@@ -176,11 +173,6 @@
         L.marker(coords[2]).addTo(map)
           .bindTooltip(location3Tooltip);
 
-
-
-        clickme_id.addEventListener('click', function () {
-            document.getElementById('photos_id').innerHTML = '<img src="https://i.imgur.com/9B7PiKJ.jpg">';
-        });
     </script>
 
 </body>
