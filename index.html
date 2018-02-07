@@ -17,9 +17,15 @@
             padding: 0;
             background: #f5f5f5;
             font-family: "Montserrat", sans-serif;
-            /* change body font here */
             color: #3d3d3d;
             font-size: 100%;
+        }
+
+        header,
+        footer {
+            background: #00a1ff;
+            color: white;
+            padding: 8px 0;
         }
 
         section {
@@ -83,25 +89,46 @@
             display: inline-block;
             width: 100%;
         }
+
+        .modal {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            background: #fcfafab8;
+            z-index: 1000;
+            display: none;
+        }
+
+        .modal-content {
+            position: absolute;
+            bottom: 7%;
+            width: 450px;
+            left: 50%;
+            background: #e3e1e1b8;
+            padding: 2% 3%;
+            margin-left: calc(-640px / 2 - 3%);
+        }
     </style>
 
 </head>
 
 <body>
-    <section>
-        <h1>Our Hyperurbanizing Megaregion</h1>
-    </section>
-
+    <header>
+        <section>
+            <h1>Our Hyperurbanizing Megaregion</h1>
+        </section>
+    </header>
     <section>
         <div id='map'></div>
     </section>
 
     <section>
-        <h2>about this map</h2>
+        <h2>about Orlando, Florida</h2>
         <p>Before the 1960's, it was all orange groves, nurseries for ferns, and wetlands. Now when I go home, it seems like
-            it's all concrete, asphalt, and retention ponds. The entire lot of the house I grew up in eventually became a
-            retention pond to facilitate the expansion of a highway. When it was still a backyard, my sister buried her dead
-            hamster "Salmon" there.</p>
+            it's all concrete, asphalt, and retention ponds, and
+            <button id="show-lots">parking lots</button>. The entire lot of the house I grew up in eventually became a retention pond to facilitate
+            the expansion of a highway. When it was still a backyard, my sister buried her dead hamster "Salmon" there.</p>
         <p>Area Guinness Record: The most parallel bar dips in one minute with a 100 lb pack is 31, and was achieved by Denys
             Havrikov (Ukraine), in
             <a href="http://www.guinnessworldrecords.com/world-records/104417-most-parallel-bar-dips-in-one-minute-with-a-100-lb-pack">Orlando, Florida, USA, on 25 June 2017</a>.</p>
@@ -114,12 +141,12 @@
         </ul>
     </section>
 
-    <section>
-
-        <button id="clickme_id">Mall Parking Lot</button>
-        <div id="photos_id"></div>
-
-    </section>
+    <div class="modal">
+        <div class="modal-content">
+            <h3>A mall parking lot</h3>
+            <img src="http://fscomps.fotosearch.com/compc/GLW/GLW413/gwt172030.jpg" alt="Some parking lot">
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
@@ -133,10 +160,10 @@
 
         // create variables for data and values
         var location1Name = "Pet Cemetary"
-            location1Coords = [28.647274, -81.317506],
+        location1Coords = [28.647274, -81.317506],
             location1Details = "My sister's dead hamster Salmon was buried here.";
         var location2Name = "Little League Park";
-            location2Coords = [28.650825, -81.314764],
+        location2Coords = [28.650825, -81.314764],
             location2Details = "I played shortstop in 8th grade little league.";
         var location3Name = "Hector Gonzalez's Old House",
             location3Coords = [28.651020, -81.317126],
@@ -167,12 +194,21 @@
 
         // add markers
         L.marker(coords[0]).addTo(map)
-          .bindTooltip(location1Tooltip);
+            .bindTooltip(location1Tooltip);
         L.marker(coords[1]).addTo(map)
-          .bindTooltip(location2Tooltip);
+            .bindTooltip(location2Tooltip);
         L.marker(coords[2]).addTo(map)
-          .bindTooltip(location3Tooltip);
+            .bindTooltip(location3Tooltip);
 
+        // show the modal
+        $('#show-lots').on("click", function () {
+            $('.modal').fadeToggle();
+        });
+
+        // hide the modal
+        $('.modal').click(function () {
+            $('.modal').fadeToggle();
+        });
     </script>
 
 </body>
