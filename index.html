@@ -31,6 +31,7 @@
     footer a {
       color: #cae3f2;
     }
+
     section {
       width: 80%;
       margin: 20px auto;
@@ -93,6 +94,9 @@
       width: 100%;
     }
 
+    .warning {
+      color: red;
+    }
     .modal {
       position: absolute;
       width: 100%;
@@ -135,74 +139,87 @@
     <p>Area Guinness Record: The most parallel bar dips in one minute with a 100 lb pack is 31, and was achieved by Denys Havrikov
       (Ukraine), in
       <a href="http://www.guinnessworldrecords.com/world-records/104417-most-parallel-bar-dips-in-one-minute-with-a-100-lb-pack">Orlando, Florida, USA, on 25 June 2017</a>.</p>
+  </section>
+  <footer>
+    <section>
+      <ul>
+        <li>See my projects on GitHub:
+          <a href="https://github.com/JoshuaKnightKY">JoshuaKnightKY</a>
+        </li>
+        <!-- <li>Visit my <a href='#'>mapping portfolio</a>.</li> -->
+      </ul>
     </section>
-    <footer>
-      <section>
-        <ul>
-          <li>See my projects on GitHub:
-            <a href="https://github.com/JoshuaKnightKY">JoshuaKnightKY</a>
-          </li>
-          <!-- <li>Visit my <a href='#'>mapping portfolio</a>.</li> -->
-        </ul>
-      </section>
-    </footer>
+  </footer>
 
 
-    <div class="modal">
-      <div class="modal-content">
-        <h3>A mall parking lot</h3>
-        <img src="http://fscomps.fotosearch.com/compc/GLW/GLW413/gwt172030.jpg" alt="Some parking lot">
-      </div>
+  <div class="modal">
+    <div class="modal-content">
+      <h3>A mall parking lot</h3>
+      <img src="http://fscomps.fotosearch.com/compc/GLW/GLW413/gwt172030.jpg" alt="Some parking lot">
     </div>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet-src.js"></script>
-    <script>
-      // map options
-      var options = {
-        center: [28.651892, -81.315475], // map recentered to lot north of Wirz park
-        zoom: 16 // adjust to display all locations upon load
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet-src.js"></script>
+  <script>
+    // map options
+    var options = {
+      center: [28.651892, -81.315475], // map recentered to lot north of Wirz park
+      zoom: 16 // adjust to display all locations upon load
+    }
+
+    // create variables for data and values
+    var nameLocation = ["Pet Cemetary", "Wirz Park Big Field", "Hector's House", "Wirz Park Small Field",
+      "7-11 in Deer Run", "Kyle's House"
+    ];
+    coordinateLocation = [
+      [28.647274, -81.317506],
+      [28.650825, -81.314764],
+      [28.651020, -81.317126],
+      [28.650600, -81.315934],
+      [28.653221, -81.309527],
+      [28.654393, -81.318275]
+    ];
+    detailsLocation = ["My sister's dead hamster Salmon was buried here.",
+      "The big field for weekend little league games.", "My best friend in middle school lived here.",
+      "The small field for little league practice.", "This was the closest convenience store.",
+      "Kyle was also part of the 'plays too much nintendo' club."
+    ];
+    descriptionCurrent = [false, true, false, true, true, false]; // is the description still valid today
+
+    // create a Leaflet map in our division container with id of 'map'
+    var map = L.map('map', options);
+
+    // request some basemap tiles and add to the map
+    var tiles = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+      }).addTo(map);
+
+    // add markers
+    for (var i = 0; i < nameLocation.length; i++) {
+      // console.log(coordinateLocation[i]);
+      var locationPopup = "<b>" + nameLocation[i] + "</b><br>" +
+        "<b>Details</b>: " + detailsLocation[i];
+      if (descriptionCurrent[i] == false) {
+        locationPopup += "<br><b class='warning'>Information Outdated!</b>"
       }
-
-      // create variables for data and values
-      var nameLocation = ["Pet Cemetary", "Wirz Park Big Field", "Hector's House", "Wirz Park Small Field", "7-11 in Deer Run", "Kyle's House"];
-          coordinateLocation = [[28.647274, -81.317506], [28.650825, -81.314764], [28.651020, -81.317126], [28.650600, -81.315934], [28.653221, -81.309527], [28.654393, -81.318275]];
-          detailsLocation = ["My sister's dead hamster Salmon was buried here.", "The big field for weekend little league games.", "My best friend in middle school lived here.", "The small field for little league practice.", "This was the closest convenience store.", "Kyle was also part of the 'plays too much nintendo' club."];
-          descriptionCurrent = [false, true, false, true, true, false]; // is the description still valid today
-
-      // create a Leaflet map in our division container with id of 'map'
-      var map = L.map('map', options);
-
-      // request some basemap tiles and add to the map
-      var tiles = L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        }).addTo(map);
-
-            // add markers
-      for (var i = 0; i < nameLocation.length; i++){
-        // console.log(coordinateLocation[i]);
-        var locationPopup = "<b>" + nameLocation[i] + "</b><br>" +
-          "<b>Details</b>: " + detailsLocation[i];
-          if (descriptionCurrent[i] == false){
-            var locationPopup = locationPopup + "<br><font color='#ff0000'><b>Information Outdated!"
-          }
-        L.marker(coordinateLocation[i]).addTo(map).bindTooltip(locationPopup);
-      }
+      L.marker(coordinateLocation[i]).addTo(map).bindTooltip(locationPopup);
+    }
 
 
 
-      // show the modal
-      $('#show-lots').on("click", function () {
-        $('.modal').fadeToggle();
-      });
+    // show the modal
+    $('#show-lots').on("click", function () {
+      $('.modal').fadeToggle();
+    });
 
-      // hide the modal
-      $('.modal').click(function () {
-        $('.modal').fadeToggle();
-      });
-    </script>
+    // hide the modal
+    $('.modal').click(function () {
+      $('.modal').fadeToggle();
+    });
+  </script>
 
 </body>
 
