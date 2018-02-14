@@ -94,6 +94,9 @@
       width: 100%;
     }
 
+    .warning {
+      color: red;
+    }
     .modal {
       position: absolute;
       width: 100%;
@@ -200,7 +203,7 @@
       var locationPopup = "<b>" + nameLocation[i] + "</b><br>" +
         "<b>Details</b>: " + detailsLocation[i];
       if (descriptionCurrent[i] == false) {
-        locationPopup += "<br><font color='#ff0000'><b>Information Outdated!"
+        locationPopup += "<br><b class='warning'>Information Outdated!</b>"
       }
       L.marker(coordinateLocation[i]).addTo(map).bindTooltip(locationPopup);
     }
