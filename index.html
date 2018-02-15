@@ -160,11 +160,12 @@
     <script>
       // map options
       var options = {
-        center: [28.651007, -81.315989], // map recentered to Wirz Park Pool
+        center: [28.651007, -81.315989], // map centered to Wirz Park Pool
         zoom: 16 // adjust to display all locations upon load
       }
 
       // create variables for data and values
+
       var nameLocation = ["Pet Cemetary", "Wirz Park Big Field", "Hector's House", "Wirz Park Small Field", "7-11 in Deer Run", "Kyle's House"];
           coordinateLocation = [[28.647274, -81.317506], [28.650825, -81.314764], [28.651020, -81.317126], [28.650600, -81.315934], [28.653221, -81.309527], [28.654393, -81.318275]];
           detailsLocation = ["My sister's dead hamster Salmon was buried here.", "The big field for weekend little league games.", "My best friend in middle school lived here.", "The small field for little league practice.", "This was the closest convenience store.", "Kyle was also part of the 'plays too much nintendo' club."];
@@ -190,13 +191,14 @@
         }).addTo(map);
 
 
-            // add markers
+      // add initial markers
       for (var i = 0; i < nameLocation.length; i++){
         var locationPopup = "<h2>" + nameLocation[i] + "</h2>" + detailsLocation[i];
           var iconLocation = createIcon(typeLocation[i]);
           L.marker(coordinateLocation[i], {icon: iconLocation}).addTo(map).bindTooltip(locationPopup);
       };
 
+      // createIcon function assigns iconURL based on type
       function createIcon(locationType) {
         var iconURL = "",
             iconSize = 40;
@@ -211,6 +213,7 @@
             iconURL = typeIconURL[3];
         }
 
+        // return result, iconUrl is argument for L.icon, NOT iconURL
         var result = L.icon({
             iconUrl: iconURL,
             iconSize: iconSize,
@@ -219,13 +222,14 @@
         return result;
       };
 
+      // button code (challenge)
       var button = document.getElementById("hidden-dangers");
 
   		button.addEventListener("click", function() {
   			mapHidden();
   		});
 
-
+      // mapHidden function maps all secretLocation with special icon
   		function mapHidden() {
         var dangerIcon = L.icon({
           iconUrl: "svgs/danger-15.svg",
