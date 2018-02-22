@@ -8,15 +8,17 @@
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+
 
   <style>
     body {
       margin: 0;
       padding: 0;
       background: #f5f5f5;
-      font-family: "Montserrat", sans-serif;
+      font-family: "Catamaran", sans-serif;
       color: #3d3d3d;
       font-size: 100%;
     }
@@ -38,26 +40,23 @@
 
     h1 {
       font-size: 2em;
-      font-family: "Catamaran", monospace;
-      /* changed heading font */
+      font-family: "Lora", monospace;
       letter-spacing: .04em;
     }
 
     h2 {
-      font-size: 1.5em;
-      font-family: "Catamaran", monospace;
-      /* changed heading font */
-      letter-spacing: .04em;
+      font-size: 1.3em;
+      font-family: "Lora", serif;
     }
 
     p {
-      font-size: 1em;
+      font-family: "Catamaran", sans-serif;
+      font-size: 1.3em;
       line-height: 1.5em;
     }
 
     a {
       color: #00a1ff;
-      /* link color to current favorite color (cyan/seafoam) */
       font-weight: bold;
       text-decoration: none;
     }
@@ -75,43 +74,30 @@
     }
 
     #map {
-      width: 100%;
+      width: 960px;
       height: 540px;
       margin: 10px auto;
       border: 2px solid #d3d3d3;
     }
 
-    .two-column {
-      /* not really using the two column, but page is responsive */
-      float: left;
-      width: 49%;
-      margin-right: 1%;
+    .icon:hover {
+      opacity: .8;
     }
 
-    .below-columns {
-      display: inline-block;
-      width: 100%;
+    .leaflet-popup-content h2 {
+      margin-bottom: 6px;
     }
 
-    .modal {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      bottom: 0;
-      background: #fcfafab8;
-      z-index: 1000;
-      display: none;
+    .leaflet-popup-content p {
+      margin: 3px 0 6px;
+      font-size: 1.1em;
     }
 
-    .modal-content {
-      position: absolute;
-      bottom: 7%;
-      width: 450px;
-      left: 50%;
-      background: #e3e1e1b8;
-      padding: 2% 3%;
-      margin-left: calc(-640px / 2 - 3%);
+    .leaflet-popup-content a {
+      font-weight: normal;
     }
+
+
   </style>
 
 </head>
@@ -147,12 +133,12 @@
     </footer>
 
 
-    <div class="modal">
+    <!-- <div class="modal">
       <div class="modal-content">
         <h3>A mall parking lot</h3>
         <img src="http://fscomps.fotosearch.com/compc/GLW/GLW413/gwt172030.jpg" alt="Some parking lot">
       </div>
-    </div>
+    </div> -->
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
       crossorigin="anonymous"></script>
@@ -161,24 +147,133 @@
       // map options
       var options = {
         center: [28.651007, -81.315989], // map centered to Wirz Park Pool
-        zoom: 16 // adjust to display all locations upon load
+        zoom: 14 // adjust to display all locations upon load
       }
 
-      // create variables for data and values
+      // create array of objects for each location
 
-      var nameLocation = ["Pet Cemetary", "Wirz Park Big Field", "Hector's House", "Wirz Park Small Field", "7-11 in Deer Run", "Kyle's House"];
-          coordinateLocation = [[28.647274, -81.317506], [28.650825, -81.314764], [28.651020, -81.317126], [28.650600, -81.315934], [28.653221, -81.309527], [28.654393, -81.318275]];
-          detailsLocation = ["My sister's dead hamster Salmon was buried here.", "The big field for weekend little league games.", "My best friend in middle school lived here.", "The small field for little league practice.", "This was the closest convenience store.", "Kyle was also part of the 'plays too much nintendo' club."];
-          descriptionCurrent = [false, true, false, true, true, false]; // is the description still valid today
-          typeLocation = ["Cemetary", "Baseball Field", "Residence", "Baseball Field", "Convenience Store", "Residence"];
-          typeIconURL = ["svgs/veterinary-15.svg", "svgs/baseball-15.svg" , "svgs/home-15.svg", "svgs/commercial-15.svg"];
-
-      // create variables for secret locations
-
-      var secretLocation = ["High Voltage Substation", "Sinkholes", "Jason's House"];
-          secretCoords = [[28.650235, -81.321234], [28.649962, -81.314955], [28.649718, -81.320141]];
-          secretDetails = ["No Tresspassing Signs and Razor-wire" , "Before the trail system..." , "Bully who claimed to know karate."];
-          secretType = ["Danger", "Danger", "Danger"];
+      var myLocations = [
+        {
+          name: "Pet Cemetary",
+          properties: {
+            coordinates: [28.647274, -81.317506],
+            type: "Animal",
+            details: "My sister's dead hamster Salmon was buried here."
+          }
+        },
+        {
+          name: "Wirz Park Big Field",
+          properties: {
+            coordinates: [28.650825, -81.314764],
+            type: "Baseball",
+            details: "The big field for weekend little league games."
+          }
+        },
+        {
+          name: "Hector's House",
+          properties: {
+            coordinates: [28.651020, -81.317126],
+            type: "Residence",
+            details: "My best friend in middle school lived here."
+          }
+        },
+        {
+          name: "Wirz Park Small Field",
+          properties: {
+            coordinates: [28.650600, -81.315934],
+            type: "Baseball",
+            details: "The small field for little league practice."
+          }
+        },
+        {
+          name: "7-11 in Deer Run",
+          properties: {
+            coordinates: [28.653221, -81.309527],
+            type: "Commercial",
+            details: "This was the closest convenience store."
+          }
+        },
+        {
+          name: "Kyle's House",
+          properties: {
+            coordinates: [28.654393, -81.318275],
+            type: "Residence",
+            details: "Kyle was also part of the 'plays too much nintendo' club."
+          }
+        },
+        {
+          name: "High Voltage Substation",
+          properties: {
+            coordinates: [28.650235, -81.321234],
+            type: "Danger",
+            details: "No Tresspassing Signs and Razor-wire fences all around."
+          }
+        },
+        {
+          name: "Sinkholes",
+          properties: {
+            coordinates: [28.649962, -81.314955],
+            type: "Danger",
+            details: "Before the trail system..."
+          }
+        },
+        {
+          name: "Jason's House",
+          properties: {
+            coordinates: [28.649718, -81.320141],
+            type: "Danger",
+            details: "Bully who claimed to know karate."
+          }
+        },
+        {
+          name: "Tony Roma's Pizza",
+          properties: {
+            coordinates: [28.649852, -81.323039],
+            type: "Restaurant",
+            details: "Once the beloved neighborhood pizza place, this is now a Dollar General."
+          }
+        },
+        {
+          name: "Casselberry Elementary",
+          properties: {
+            coordinates: [28.660430, -81.317003],
+            type: "School",
+            details: "Home of the Fighting Pandas"
+          }
+        },
+        {
+          name: "The Woods",
+          properties: {
+            coordinates: [28.658428, -81.320880],
+            type: "Danger",
+            details: "Traditional location of juvenile deliquency"
+          }
+        },
+        {
+          name: "Sewer Entrance",
+          properties: {
+            coordinates: [28.656334, -81.320258],
+            type: "Utility",
+            details: "A culvert here allows easy access to storm sewers."
+          }
+        },
+        {
+          name: "South Seminole Middle School",
+          properties: {
+            coordinates: [28.660210, -81.319258],
+            type: "School",
+            details: "We all called it South Sewerhole."
+          }
+        },
+        {
+          name: "Semoran Skateway",
+          properties: {
+            coordinates: [28.642318, -81.323895],
+            type: "Recreation",
+            details: "Roller skating rink with sweet arcade games."
+          }
+        }
+      ];
 
 
       // create a Leaflet map in our division container with id of 'map'
@@ -192,10 +287,15 @@
 
 
       // add initial markers
-      for (var i = 0; i < nameLocation.length; i++){
-        var locationPopup = "<h2>" + nameLocation[i] + "</h2>" + detailsLocation[i];
-          var iconLocation = createIcon(typeLocation[i]);
-          L.marker(coordinateLocation[i], {icon: iconLocation}).addTo(map).bindTooltip(locationPopup);
+      for (var i = 0; i < myLocations.length; i++){
+        var props = myLocations[i].properties;
+        var locationPopup =
+          "<h2>" + myLocations[i].name + "</h2>" +
+          "<p>" +
+          props.details
+          "</p>";
+          var iconLocation = createIcon(props.type);
+          L.marker(props.coordinates, {icon: iconLocation}).addTo(map).bindTooltip(locationPopup);
       };
 
       // createIcon function assigns iconURL based on type
@@ -203,14 +303,24 @@
         var iconURL = "",
             iconSize = 40;
 
-        if (typeLocation[i] == "Cemetary") {
-            iconURL = typeIconURL[0];
-        } else if (typeLocation[i] == "Baseball Field") {
-            iconURL = typeIconURL[1];
-        } else if (typeLocation[i] == "Residence") {
-            iconURL = typeIconURL[2];
+        if (props.type == "Animal") {
+            iconURL = "svgs/veterinary-15.svg";
+        } else if (props.type == "Baseball") {
+            iconURL = "svgs/baseball-15.svg";
+        } else if (props.type == "Residence") {
+            iconURL = "svgs/home-15.svg";
+        } else if (props.type == "Commercial") {
+            iconURL = "svgs/commercial-15.svg";
+        } else if (props.type == "Danger") {
+            iconURL = "svgs/danger-15.svg";
+        } else if (props.type == "Utility") {
+            iconURL = "svgs/swimming-15.svg";
+        } else if (props.type == "Recreation") {
+            iconURL = "svgs/gaming-15.svg";
+        } else if (props.type == "Restaurant") {
+            iconURL = "svgs/restaurant-15.svg";
         } else {
-            iconURL = typeIconURL[3];
+            iconURL = "svgs/school-15.svg";
         }
 
         // return result, iconUrl is argument for L.icon, NOT iconURL
@@ -222,25 +332,25 @@
         return result;
       };
 
-      // button code (challenge)
-      var button = document.getElementById("hidden-dangers");
-
-  		button.addEventListener("click", function() {
-  			mapHidden();
-  		});
-
-      // mapHidden function maps all secretLocation with special icon
-  		function mapHidden() {
-        var dangerIcon = L.icon({
-          iconUrl: "svgs/danger-15.svg",
-          iconSize: 40,
-        });
-  			for (var i = 0; i < secretLocation.length; i++) {
-  				var popup = "<h3>" + secretLocation[i] + "</h3><br>" + secretDetails[i];
-  				L.marker(secretCoords[i], {icon: dangerIcon}).addTo(map).bindTooltip(popup);
-  			}
-
-  		}
+      // // button code (challenge)
+      // var button = document.getElementById("hidden-dangers");
+      //
+  		// button.addEventListener("click", function() {
+  		// 	mapHidden();
+  		// });
+      //
+      // // mapHidden function maps all secretLocation with special icon
+  		// function mapHidden() {
+      //   var dangerIcon = L.icon({
+      //     iconUrl: "svgs/danger-15.svg",
+      //     iconSize: 40,
+      //   });
+  		// 	for (var i = 0; i < secretLocation.length; i++) {
+  		// 		var popup = "<h3>" + secretLocation[i] + "</h3><br>" + secretDetails[i];
+  		// 		L.marker(secretCoords[i], {icon: dangerIcon}).addTo(map).bindTooltip(popup);
+  		// 	}
+      //
+  		// }
 
 
       // show the modal
