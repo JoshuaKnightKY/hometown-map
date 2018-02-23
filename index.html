@@ -116,7 +116,7 @@
     <h2>about Orlando, Florida</h2>
     <p>Before the 1960's, it was all orange groves, nurseries for ferns, and wetlands. Now when I go home, it seems like it's
       all concrete, asphalt, retention ponds, and parking lots. The entire lot of the house I grew up in eventually became a retention pond to facilitate the
-      expansion of a highway. When it was still a backyard, my sister buried her dead hamster "Salmon" there.  As in any typical community, there were <button id='hidden-dangers'>hidden dangers</button>.</p>
+      expansion of a highway. When it was still a backyard, my sister buried her dead hamster "Salmon" there.</p>
     <p>Area Guinness Record: The most parallel bar dips in one minute with a 100 lb pack is 31, and was achieved by Denys Havrikov
       (Ukraine), in
       <a href="http://www.guinnessworldrecords.com/world-records/104417-most-parallel-bar-dips-in-one-minute-with-a-100-lb-pack">Orlando, Florida, USA, on 25 June 2017</a>.</p>
@@ -152,8 +152,31 @@
 
       // create array of objects for each location
 
-      var myLocations = [
-        {
+      var myLocations = {
+        crs: "WGS 84 (EPSG: 4326)",
+        author: "Joshua Knight",
+
+        // function to show all names in data
+        describeMe: function() {
+
+          // declare variables at top of function
+          var myList = "";
+
+          // loop through all features to build list of names
+          for (i = 0; i < this.features.length; i++) {
+            myList += this.features[i].name + ", ";
+
+            // at the end of the list give a final message
+            if (i === this.features.length-1) {
+              myList += " are all of the places I have mapped!";
+              break;
+            }
+          };
+
+          return console.log ("Report: " + myList);
+      },
+      // Locations as array of JS objects
+      features: [{
           name: "Pet Cemetary",
           properties: {
             coordinates: [28.647274, -81.317506],
@@ -273,7 +296,8 @@
             details: "Roller skating rink with sweet arcade games."
           }
         }
-      ];
+      ]
+    };
 
 
       // create a Leaflet map in our division container with id of 'map'
@@ -287,10 +311,10 @@
 
 
       // add initial markers
-      for (var i = 0; i < myLocations.length; i++){
-        var props = myLocations[i].properties;
+      for (var i = 0; i < myLocations.features.length; i++){
+        var props = myLocations.features[i].properties;
         var locationPopup =
-          "<h2>" + myLocations[i].name + "</h2>" +
+          "<h2>" + myLocations.features[i].name + "</h2>" +
           "<p>" +
           props.details
           "</p>";
