@@ -143,6 +143,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
       crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet-src.js"></script>
+	  <script src="data/route.js"></script>
     <script>
       // map options
       var options = {
@@ -355,6 +356,54 @@
         });
         return result;
       };
+
+      var myRoute = L.geoJson(routeData, {
+
+          filter : function(feature) {
+              if(feature.geometry.type == "LineString") {
+                  return feature;
+              }
+          },
+          style : function(feature) {
+
+              return {
+                  color: "#39B3C9",
+                  weight: 5,
+                  opacity: .8,
+                  dashArray: "8, 8"
+              }
+          }
+
+      }).addTo(map);
+
+      var myStops = L.geoJson(routeData, {
+
+          filter : function(feature) {
+              if(feature.geometry.type == "Point") {
+                  return feature;
+              }
+          },
+          onEachFeature : function(feature, layer) {
+
+              layer.bindTooltip(feature.properties.name);
+          }
+
+      }).addTo(map);
+
+      myRoute.eachLayer(function(layer) {
+          layer.on('mouseover', function(e) {
+              e.target.setStyle({
+                  color: '#DC2C98',
+                  dashArray: "5, 5"
+              });
+          });
+          layer.on('mouseout', function(e) {
+              e.target.setStyle({
+                  color: '#2CB3DC',
+                  dashArray: "8, 8"
+              });
+          });
+      });
 
       // // button code (challenge)
       // var button = document.getElementById("hidden-dangers");
