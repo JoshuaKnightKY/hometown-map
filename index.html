@@ -12,94 +12,68 @@
   <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
-
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-      font-family: "Catamaran", sans-serif;
-      color: #3d3d3d;
-      font-size: 100%;
-    }
+		body {
+			margin: 0;
+			padding: 0;
+			background: "whitesmoke";
+			font-family: "Noto Sans", sans-serif;
+			color: #3d3d3d;
+		}
 
-    header,
-    footer {
-      background: #00a1ff;
-      color: white;
-      padding: 8px 0;
-    }
+		h1 {
+			position: absolute;
+			margin-top: 0;
+			top: 10px;
+			left: 15px;
+			font-size: 2em;
+			font-family: "Lora", serif;
+			letter-spacing: .04em;
+			padding: 10px 15px;
+			background: rgba(256, 256, 256, .75);
+			border: 1px solid grey;
+			border-radius: 3px;
+			z-index: 800;
+		}
 
-    footer a {
-      color: #cae3f2;
-    }
-    section {
-      width: 80%;
-      margin: 20px auto;
-    }
+		h2 {
+			font-family: "Lora", serif;
+			letter-spacing: .04em;
+		}
 
-    h1 {
-      font-size: 2em;
-      font-family: "Lora", monospace;
-      letter-spacing: .04em;
-    }
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
 
-    h2 {
-      font-size: 1.3em;
-      font-family: "Lora", serif;
-    }
+		#about {
+			position: absolute;
+			bottom: 20px;
+			left: 15px;
+			width: 280px;
+			padding: 0 15px;
+			background: rgba(256, 256, 256, .85);
+			border: 1px solid grey;
+			border-radius: 3px;
+			z-index: 800;
+		}
 
-    p {
-      font-family: "Catamaran", sans-serif;
-      font-size: 1.3em;
-      line-height: 1.5em;
-    }
+		p {
+			font-size: .9em;
+			line-height: 1.5em;
+		}
 
-    a {
-      color: #00a1ff;
-      font-weight: bold;
-      text-decoration: none;
-    }
+		a {
+			color: #005daa;
+			text-decoration: none;
+		}
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    li {
-      margin: 10px 0
-    }
-
-    #map {
-      width: 960px;
-      height: 540px;
-      margin: 10px auto;
-      border: 2px solid #d3d3d3;
-    }
-
-    .icon:hover {
-      opacity: .8;
-    }
-
-    .leaflet-popup-content h2 {
-      margin-bottom: 6px;
-    }
-
-    .leaflet-popup-content p {
-      margin: 3px 0 6px;
-      font-size: 1.1em;
-    }
-
-    .leaflet-popup-content a {
-      font-weight: normal;
-    }
-
-
-  </style>
-
+		a:hover {
+			text-decoration: underline;
+		}
+	</style>
 </head>
 
 <body>
@@ -112,24 +86,31 @@
     <div id='map'></div>
   </section>
 
-  <section>
-    <h2>about Orlando, Florida</h2>
+  <section id="about">
+    <h2>about these Casselberry suburbs</h2>
     <p>Before the 1960's, it was all orange groves, nurseries for ferns, and wetlands. Now when I go home, it seems like it's
       all concrete, asphalt, retention ponds, and parking lots. The entire lot of the house I grew up in eventually became a retention pond to facilitate the
       expansion of a highway. When it was still a backyard, my sister buried her dead hamster "Salmon" there.</p>
     <p>Area Guinness Record: The most parallel bar dips in one minute with a 100 lb pack is 31, and was achieved by Denys Havrikov
       (Ukraine), in
       <a href="http://www.guinnessworldrecords.com/world-records/104417-most-parallel-bar-dips-in-one-minute-with-a-100-lb-pack">Orlando, Florida, USA, on 25 June 2017</a>.</p>
+      <ul>
+        <li>See my projects on GitHub:
+          <a href="https://github.com/JoshuaKnightKY">JoshuaKnightKY</a>
+        </li>
+        <!-- <li>Visit my <a href='#'>mapping portfolio</a>.</li> -->
+      </ul>
+
     </section>
     <footer>
-      <section>
+      <!-- <section>
         <ul>
           <li>See my projects on GitHub:
             <a href="https://github.com/JoshuaKnightKY">JoshuaKnightKY</a>
           </li>
-          <!-- <li>Visit my <a href='#'>mapping portfolio</a>.</li> -->
+          <li>Visit my <a href='#'>mapping portfolio</a>.</li>
         </ul>
-      </section>
+      </section> -->
     </footer>
 
 
@@ -148,7 +129,7 @@
       // map options
       var options = {
         center: [28.651007, -81.315989], // map centered to Wirz Park Pool
-        zoom: 14 // adjust to display all locations upon load
+        zoom: 15 // adjust to display all locations upon load
       }
 
       // create array of objects for each location
@@ -404,6 +385,7 @@
               });
           });
       });
+      map.fitBounds(myRoute.getBounds());
 
       // // button code (challenge)
       // var button = document.getElementById("hidden-dangers");
