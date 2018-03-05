@@ -311,48 +311,43 @@
 
       // add initial markers
       for (var i = 0; i < myLocations.features.length; i++){
+        
         var props = myLocations.features[i].properties;
+        
         var locationPopup =
           "<h2>" + myLocations.features[i].name + "</h2>" +
           "<p>" +
           props.details
           "</p>";
-          var iconLocation = createIcon(props.type);
-          L.marker(props.coordinates, {icon: iconLocation}).addTo(map).bindTooltip(locationPopup);
+          
+          if(props.type) {
+            var icon = createIcon(props.type);
+          }
+          console.log(myLocations.features[i])
+          L.marker(props.coordinates, {icon: icon}).addTo(map).bindTooltip(locationPopup);
       };
 
       // createIcon function assigns iconURL based on type
       function createIcon(locationType) {
-        var iconURL = "",
-            iconSize = 40;
 
-        if (props.type == "Animal") {
-            iconURL = "svgs/veterinary-15.svg";
-        } else if (props.type == "Baseball") {
-            iconURL = "svgs/baseball-15.svg";
-        } else if (props.type == "Residence") {
-            iconURL = "svgs/home-15.svg";
-        } else if (props.type == "Commercial") {
-            iconURL = "svgs/commercial-15.svg";
-        } else if (props.type == "Danger") {
-            iconURL = "svgs/danger-15.svg";
-        } else if (props.type == "Utility") {
-            iconURL = "svgs/swimming-15.svg";
-        } else if (props.type == "Recreation") {
-            iconURL = "svgs/gaming-15.svg";
-        } else if (props.type == "Restaurant") {
-            iconURL = "svgs/restaurant-15.svg";
-        } else {
-            iconURL = "svgs/school-15.svg";
+        var iconMap = {
+          Animal: "svgs/veterinary-15.svg",
+          Baseball: "svgs/baseball-15.svg",
+          Residence: "svgs/home-15.svg",
+          Commercial: "svgs/commercial-15.svg",
+          Danger: "svgs/danger-15.svg",
+          Utility: "svgs/swimming-15.svg",
+          Recreation: "svgs/gaming-15.svg",
+          Restaurant: "svgs/restaurant-15.svg",
+          School: "svgs/school-15.svg"
         }
 
         // return result, iconUrl is argument for L.icon, NOT iconURL
-        var result = L.icon({
-            iconUrl: iconURL,
-            iconSize: iconSize,
+        return L.icon({
+            iconUrl: iconMap[locationType],
+            iconSize: 20,
             popupAnchor: [0, -15]
         });
-        return result;
       };
 
       var myRoute = L.geoJson(routeData, {
