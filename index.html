@@ -85,11 +85,11 @@
     }
 
     .leaflet-popup-content h2 {
-      margin-bottom: 6px;
+      margin-bottom: 3px;
     }
 
     .leaflet-popup-content p {
-      margin: 3px 0 6px;
+      /* margin: 2px 0 3px; */
       font-size: 1.1em;
     }
 
@@ -97,7 +97,9 @@
       font-weight: normal;
     }
 
-
+    .route {
+      color: #2CB3DC;
+    }
   </style>
 
 </head>
@@ -117,7 +119,7 @@
     <p>Before the 1960's, it was all orange groves, nurseries for ferns, and wetlands. Now when I go home, it seems like it's
       all concrete, asphalt, retention ponds, and parking lots. The entire lot of the house I grew up in eventually became a retention pond to facilitate the
       expansion of a highway. When it was still a backyard, my sister buried her dead hamster "Salmon" there.</p>
-    <p>The <font color="#2CB3DC"><b>blue route</b></font> shows the official and approved bike path home from South Seminole Middle School to Home.</a>.</p>
+    <p>The <b class="route">blue route</b> shows the official and approved bike path home from South Seminole Middle School to Home.</a>.</p>
     </section>
     <footer>
       <section>
@@ -320,10 +322,8 @@
           props.details
           "</p>";
           
-          if(props.type) {
-            var icon = createIcon(props.type);
-          }
-          console.log(myLocations.features[i])
+          var icon = createIcon(props.type);
+    
           L.marker(props.coordinates, {icon: icon}).addTo(map).bindTooltip(locationPopup);
       };
 
@@ -398,13 +398,13 @@
           });
       });
 
-      // // button code (challenge)
+      // button code (challenge)
       // var button = document.getElementById("hidden-dangers");
-      //
+      
   		// button.addEventListener("click", function() {
   		// 	mapHidden();
   		// });
-      //
+      
       // // mapHidden function maps all secretLocation with special icon
   		// function mapHidden() {
       //   var dangerIcon = L.icon({
@@ -415,7 +415,7 @@
   		// 		var popup = "<h3>" + secretLocation[i] + "</h3><br>" + secretDetails[i];
   		// 		L.marker(secretCoords[i], {icon: dangerIcon}).addTo(map).bindTooltip(popup);
   		// 	}
-      //
+      
   		// }
 
 
