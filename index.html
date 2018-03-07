@@ -128,9 +128,28 @@
     <script>
       // map options
       var options = {
-        center: [28.651007, -81.315989], // map centered to Wirz Park Pool
-        zoom: 15 // adjust to display all locations upon load
+        center: [28.6526, -81.3233], // map centered to Wirz Park Pool
+        zoom: 15, // adjust to display all locations upon load
+        zoomSnap: .1 // allow refined zoom levels
       }
+
+      // create a Leaflet map in our division container with id of 'map'
+      var map = L.map('map', options);
+
+      // restrict map to bounds
+      map.setMaxBounds(map.getBounds());
+      
+      // set min and max zoom level
+      map.setMinZoom(map.getZoom() - 2);
+      map.setMaxZoom(map.getZoom() + 2);
+
+      // request some basemap tiles and add to the map
+      var tiles = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        }).addTo(map);
+
+
 
       // create array of objects for each location
 
@@ -281,17 +300,6 @@
       ]
     };
 
-
-      // create a Leaflet map in our division container with id of 'map'
-      var map = L.map('map', options);
-
-      // request some basemap tiles and add to the map
-      var tiles = L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        }).addTo(map);
-
-
       // add initial markers
       for (var i = 0; i < myLocations.features.length; i++){
         var props = myLocations.features[i].properties;
@@ -385,7 +393,6 @@
               });
           });
       });
-      map.fitBounds(myRoute.getBounds());
 
       // // button code (challenge)
       // var button = document.getElementById("hidden-dangers");
